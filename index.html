@@ -1,0 +1,92 @@
+<?php
+/* =====================================
+   PHP ASIN AUTO BOOK LANDING PAGE
+   Single-file – No API required
+===================================== */
+
+// 1. GET ASIN FROM URL (?asin=XXXXXXXXXX)
+$asin = $_GET['asin'] ?? 'B08FHBV4ZX';
+
+// 2. NO STATIC DATA MAP (ASIN ONLY)
+
+// 3. ASIN-ONLY DEFAULT VALUES
+$title = 'Free Book Download';
+$author = 'Unknown Author';
+$description = 'Download this book instantly in PDF format.';
+$download = '#';
+
+// 4. AMAZON IMAGE (NO API)
+$cover = "https://images-na.ssl-images-amazon.com/images/P/{$asin}.01._SX600_.jpg";
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title><?php echo htmlspecialchars($title); ?> – Free PDF Download</title>
+  <meta name="description" content="Download <?php echo htmlspecialchars($title); ?> by <?php echo htmlspecialchars($author); ?> in PDF format." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #ffffff;
+    }
+    .container { max-width: 900px; margin: auto; padding: 40px 20px; text-align: center; }
+    h1 { font-size: 42px; margin-bottom: 10px; }
+    .author { opacity: .85; margin-bottom: 20px; }
+    img { width: 260px; border-radius: 14px; box-shadow: 0 25px 50px rgba(0,0,0,.45); }
+    .card {
+      margin-top: 30px;
+      background: rgba(255,255,255,.08);
+      border-radius: 16px;
+      padding: 30px;
+    }
+    .btn {
+      display: inline-block;
+      background: #22c55e;
+      color: #022c22;
+      font-weight: 700;
+      padding: 16px 36px;
+      border-radius: 12px;
+      text-decoration: none;
+      margin-top: 20px;
+    }
+    footer { margin-top: 60px; font-size: 13px; opacity: .6; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1><?php echo htmlspecialchars($title); ?></h1>
+  <div class="author">by <?php echo htmlspecialchars($author); ?></div>
+
+  <img src="<?php echo $cover; ?>" alt="<?php echo htmlspecialchars($title); ?> cover" />
+
+  <p style="margin-top:25px"><?php echo htmlspecialchars($description); ?></p>
+
+  <div class="card">
+    <h2>Available Formats</h2>
+    <p>PDF · EPUB · MOBI</p>
+    <a class="btn" href="<?php echo $download; ?>">Download PDF</a>
+  </div>
+
+  <footer>
+    <p>© 2026 Book Download</p>
+    <p><a href="#">DMCA</a> · <a href="#">Privacy</a></p>
+  </footer>
+</div>
+
+<!-- Schema.org Book -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Book",
+  "name": "<?php echo addslashes($title); ?>",
+  "author": {"@type":"Person","name":"<?php echo addslashes($author); ?>"}
+}
+</script>
+
+</body>
+</html>
