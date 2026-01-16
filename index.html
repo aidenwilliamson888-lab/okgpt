@@ -187,35 +187,43 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  /* ================= TOP BOOK DOWNLOADS ================= */
-  const topBox = document.createElement('div');
-  topBox.id = 'topBooks';
-  topBox.innerHTML = `
-    <h3>Top Book Downloads</h3>
-    <div class="top-books-list"></div>
+  /* ================= TOP BOOK DOWNLOADS (UNDER CONTENT) ================= */
+
+const topBox = document.createElement('div');
+topBox.id = 'topBooks';
+topBox.innerHTML = `
+  <h3>Top Book Downloads</h3>
+  <div class="top-books-list"></div>
+`;
+
+/* 🔽 INSERT UNDER CONTENT */
+const mainContent = document.querySelector('main') 
+  || document.querySelector('#content') 
+  || document.body;
+
+mainContent.parentNode.insertBefore(topBox, mainContent.nextSibling);
+
+const topList = topBox.querySelector('.top-books-list');
+
+const topAsins = [
+  '1335534644',
+  'B0CH3ZN83Y',
+  '1401971369',
+  '1335534636',
+  'B0DDJPH5R6',
+  '0349132615'
+];
+
+topAsins.forEach(a => {
+  topList.innerHTML += `
+    <a href="https://okgpt.pages.dev/${a}" class="top-book-item">
+      <img loading="lazy"
+           src="https://images-na.ssl-images-amazon.com/images/P/${a}.01._SX200_.jpg">
+      <span>Download</span>
+    </a>
   `;
-  document.body.appendChild(topBox);
+});
 
-  const topList = topBox.querySelector('.top-books-list');
-
-  const topAsins = [
-    '1335534644',
-    'B0CH3ZN83Y',
-    '1401971369',
-    '1335534636',
-    'B0DDJPH5R6',
-    '0349132615'
-  ];
-
-  topAsins.forEach(a => {
-    topList.innerHTML += `
-      <a href="https://okgpt.pages.dev/${a}" class="top-book-item">
-        <img loading="lazy"
-             src="https://images-na.ssl-images-amazon.com/images/P/${a}.01._SX200_.jpg">
-        <span>Download</span>
-      </a>
-    `;
-  });
 
   /* ================= STYLES ================= */
   const style = document.createElement('style');
