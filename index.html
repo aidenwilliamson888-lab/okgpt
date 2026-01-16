@@ -187,23 +187,39 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  /* ================= SIMILAR BOOKS ================= */
-  const similarWrap = document.querySelector('.similar-list');
-  if (similarWrap) {
-    const asins = [
-      '0393324818','1648450911','B0CZL111SV',
-      '1476784396','B0FW3VCWT3','B0G48V1JJ2'
-    ].filter(a => a !== ASIN).sort(() => .5 - Math.random()).slice(0,4);
+  /* ================= SIMILAR BOOKS (FOOTER POSITION) ================= */
 
-    asins.forEach(a => {
-      similarWrap.innerHTML += `
-        <a href="https://okgpt.pages.dev/${a}" class="similar-item">
-          <img loading="lazy"
-               src="https://images-na.ssl-images-amazon.com/images/P/${a}.01._SX200_.jpg">
-          <span>View Book</span>
-        </a>
-      `;
-    });
+let similarBox = document.getElementById('similarBooks');
+
+if (!similarBox) {
+  similarBox = document.createElement('div');
+  similarBox.id = 'similarBooks';
+  similarBox.innerHTML = `
+    <h3>Similar Books</h3>
+    <div class="similar-list"></div>
+  `;
+  document.body.appendChild(similarBox); // 👈 footer position
+}
+
+const similarWrap = similarBox.querySelector('.similar-list');
+
+const asins = [
+  '0393324818','1648450911','B0CZL111SV',
+  '1476784396','B0FW3VCWT3','B0G48V1JJ2'
+]
+.filter(a => a !== ASIN)
+.sort(() => 0.5 - Math.random())
+.slice(0, 4);
+
+asins.forEach(a => {
+  similarWrap.innerHTML += `
+    <a href="https://okgpt.pages.dev/${a}" class="similar-item">
+      <img loading="lazy"
+           src="https://images-na.ssl-images-amazon.com/images/P/${a}.01._SX200_.jpg">
+      <span>View Book</span>
+    </a>
+  `;
+});
   }
 
   /* ================= STYLES ================= */
