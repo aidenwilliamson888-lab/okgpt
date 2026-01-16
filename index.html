@@ -70,22 +70,10 @@
       </div>
 </main>
 
-<!-- PDF Reader Modal -->
-<div id="pdfModal" class="fixed inset-0 bg-black/70 hidden items-center justify-center z-50">
-  <div class="bg-white w-full max-w-4xl h-[90vh] rounded-2xl shadow-xl flex flex-col overflow-hidden relative">
 
-    <!-- Advertisement 480 × 60 -->
-    <div class="flex items-center justify-center bg-gray-100 border-b p-2">
-      <div class="flex items-center justify-center text-sm text-gray-600 bg-gray-300" style="width:480px;height:60px;">
-        Advertisement 480 × 60
-      </div>
-    </div>
 
     <!-- PDF Viewer -->
-    <iframe
-      src="https://example.com/files/book.pdf#toolbar=0"
-      class="flex-1 w-full"
-      loading="lazy"></iframe>
+    
 
     <!-- Close Button -->
     <button id="closePdf" class="absolute top-4 right-4 bg-black text-white rounded-full w-10 h-10 flex items-center justify-center">✕</button>
@@ -119,7 +107,7 @@ function getASIN() {
 }
 
 const ASIN = getASIN();
-const PDF_URL = `https://example.com/files/${ASIN}.pdf`;
+const PDF_URL = `https://okgpt.pages.dev/filebookpdf.pdf`; // public PDF URL
 
 // -------- AMAZON COVER (ASIN BASED) --------
 const cover = document.getElementById("bookCover");
@@ -130,15 +118,13 @@ if (cover) {
   };
 }
 
-// -------- PDF READER MODAL --------
-const modal = document.getElementById("pdfModal");
-const closeBtn = document.getElementById("closePdf");
-
-if (downloadBtn && modal) {
+// -------- DIRECT PDF LINK --------
+if (downloadBtn) {
   downloadBtn.addEventListener("click", () => {
-    modal.classList.remove("hidden");
-    modal.classList.add("flex");
+    window.location.href = PDF_URL;
   });
+});
+});
 }
 
 if (closeBtn && modal) {
