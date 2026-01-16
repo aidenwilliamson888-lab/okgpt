@@ -3,261 +3,142 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Download Book PDF</title>
-  <meta name="description" content="Download the official PDF version of this book. Secure, instant access with verified reader reviews." />
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Book Download</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif}
+    body{background:#f4f1ea;color:#333}
+    header{background:#f3f1ea;border-bottom:1px solid #ddd}
+    .container{max-width:1100px;margin:auto;padding:20px}
+    .nav{display:flex;justify-content:space-between;align-items:center}
+    .logo{font-size:24px;font-weight:bold;color:#382110}
+    .nav a{margin-left:20px;text-decoration:none;color:#382110;font-weight:600}
+
+    .hero{display:grid;grid-template-columns:1fr 1fr;gap:40px;padding:60px 0;align-items:center}
+    .hero h1{font-size:42px;margin-bottom:10px;color:#382110}
+    .hero .asin{font-size:16px;color:#6b4f3f;margin-bottom:20px}
+    .rating{font-size:16px;margin-bottom:25px}
+
+    .btn{display:inline-block;padding:14px 26px;background:#382110;color:#fff;text-decoration:none;border-radius:4px;font-weight:bold}
+    .btn.secondary{background:#6b4f3f;margin-left:10px}
+
+    .book-cover{width:100%;max-width:320px;border-radius:6px;box-shadow:0 10px 25px rgba(0,0,0,.2)}
+
+    .features{background:#fff;padding:60px 0}
+    .features h2{text-align:center;margin-bottom:40px;color:#382110}
+    .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:30px}
+    .feature{background:#f9f9f9;padding:25px;border-radius:6px;text-align:center}
+
+    .cta{background:#382110;color:#fff;text-align:center;padding:60px 20px}
+    footer{background:#2f1b0c;color:#ddd;padding:20px;text-align:center;font-size:14px}
+
+    @media(max-width:768px){.hero{grid-template-columns:1fr;text-align:center}}
+  </style>
 </head>
-<body class="bg-gradient-to-br from-sky-50 via-indigo-50 to-fuchsia-50 min-h-screen flex items-center justify-center px-4">
+<body>
 
-  <!-- Main Card -->
-  <main class="max-w-5xl w-full bg-white/95 backdrop-blur-md shadow-[0_25px_60px_-15px_rgba(79,70,229,0.35)] rounded-3xl p-6 md:p-10 grid md:grid-cols-2 gap-8 md:gap-12">
+<header>
+  <div class="container nav">
+    <div class="logo">BookShelf</div>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#download">Download</a>
+    </nav>
+  </div>
+</header>
 
-    <!-- Book Image -->
-    <div class="flex items-center justify-center">
-      <img id="bookCover" class="rounded-2xl shadow-md w-56 md:w-72 h-auto" alt="Book Cover" />
-    </div>
+<section class="container hero">
+  <div>
+    <h1 id="bookTitle">Book Title</h1>
+    <div class="asin">ASIN: <span id="asinText"></span></div>
+    <div class="rating">⭐ Popular Amazon Book</div>
 
-    <!-- Book Info -->
-    <div class="flex flex-col justify-center">
-      <h1 id="bookTitle" class="text-2xl md:text-3xl font-bold mb-3">PDF Download</h1>
+    
 
-      <p id="bookDescription" class="text-gray-600 mb-5 leading-relaxed">
-        Download the official PDF version of this book. Instant access, high-quality content, and easy reading on any device.
-      </p>
+    <a href="#download" class="btn secondary">Download PDF</a>
+  </div>
+  <div>
+    <img id="coverImage" class="book-cover" alt="Book Cover" />
+  </div>
+</section>
 
-      <!-- Primary CTA -->
-      <button id="openPdf" class="w-full md:w-auto bg-gradient-to-r from-indigo-600 via-blue-600 to-fuchsia-600 text-white px-6 py-4 rounded-xl text-lg font-semibold hover:from-indigo-700 hover:via-blue-700 hover:to-fuchsia-700 transition shadow-lg">
-        Download PDF
-      </button>
-
-      <!-- Rating & Download Counter -->
-      <div class="flex items-center gap-4 mt-6 mb-4">
-        <div class="text-3xl font-bold" id="ratingValue">4.8</div>
-        <div>
-          <div class="text-amber-500 text-lg">★★★★★</div>
-          <div class="text-xs text-gray-500">Based on <strong id="downloadCount">1</strong> downloads</div>
-        </div>
+<section id="features" class="features">
+  <div class="container">
+    <h2>Why Download This Book</h2>
+    <div class="feature-grid">
+      <div class="feature">
+        <h3>📕 Amazon ASIN Based</h3>
+        <p>Cover image generated directly from ASIN.</p>
       </div>
-
-      <!-- Trust Strip -->
-      <div class="flex flex-wrap gap-4 text-sm text-gray-700 mt-4">
-        <span>🛡️ Secure download</span>
-        <span>📧 No spam</span>
-        <span>⚡ Instant access</span>
+      <div class="feature">
+        <h3>⚡ Fast Download</h3>
+        <p>No API, no login, instant access.</p>
       </div>
-
-      <!-- Reviews -->
-      <section class="mt-8">
-        <h2 class="text-lg font-semibold mb-4">What readers say</h2>
-        <div id="reviewSlider" class="relative">
-          <div class="review bg-gray-50 p-4 rounded-xl">
-            <p class="review-text text-sm text-gray-700"></p>
-            <p class="text-xs text-green-600 mt-2">★★★★★ — 🧾 Verified Download</p>
-          </div>
-          <div class="review bg-gray-50 p-4 rounded-xl hidden">
-            <p class="review-text text-sm text-gray-700"></p>
-            <p class="text-xs text-green-600 mt-2">★★★★★ — 🧾 Verified Download</p>
-          </div>
-          <div class="review bg-gray-50 p-4 rounded-xl hidden">
-            <p class="review-text text-sm text-gray-700"></p>
-            <p class="text-xs text-green-600 mt-2">★★★★★ — 🧾 Verified Download</p>
-          </div>
-        </div>
-      </section>
-    </div>
-  </main>
-
-  <!-- PDF Reader Modal -->
-  <div id="pdfModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md hidden items-center justify-center z-50">
-    <div class="bg-white w-full max-w-4xl h-[90vh] rounded-3xl shadow-2xl flex flex-col overflow-hidden relative">
-
-      <!-- Ad Banner -->
-      <div class="flex items-center justify-center bg-gray-100 border-b p-2">
-        <div id="adBanner" class="flex items-center justify-center text-sm text-gray-600 bg-gray-300">Ad Banner</div>
+      <div class="feature">
+        <h3>📄 PDF Format</h3>
+        <p>Easy to read on all devices.</p>
       </div>
-
-      <!-- PDF Viewer -->
-      <iframe id="pdfFrame" class="flex-1 w-full" loading="lazy"></iframe>
-
-      <!-- Watermark -->
-      <div class="absolute bottom-6 right-6 text-xs text-gray-400 opacity-60 pointer-events-none">© Downloaded from this site</div>
-
-      <!-- Close -->
-      <button id="closePdf" class="absolute top-4 right-4 bg-gradient-to-r from-indigo-600 via-blue-600 to-fuchsia-600 text-white rounded-full w-10 h-10 flex items-center justify-center shadow-lg">✕</button>
     </div>
   </div>
+</section>
+
+<section id="download" class="cta">
+  <h2>Download Book PDF</h2>
+  <p>Click below to start your download.</p>
+  <a href="files/book.pdf" download class="btn">Download PDF</a>
+</section>
+
+<footer>
+  <p>© 2026 BookShelf. ASIN-based book landing page.</p>
+</footer>
+
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+  /* GOOGLE-FRIENDLY SLUG SUPPORT: /book/asin/B0XXXX */
 
-  /* ================= ASIN FROM URL ================= */
-  const path = location.pathname.split('/').filter(Boolean);
-  const ASIN = /^[A-Z0-9]{10}$/i.test(path[path.length - 1])
-    ? path[path.length - 1]
-    : 'B0XXXXXXX';
+  function getASIN(){
+    // Priority 1: URL parameter ?asin=
+    const params = new URLSearchParams(window.location.search);
+    const asinParam = params.get('asin');
+    if(asinParam) return asinParam;
 
-  /* ================= ELEMENTS ================= */
-  const openPdf = document.getElementById('openPdf');
-  const bookTitle = document.getElementById('bookTitle');
-  const ratingValue = document.getElementById('ratingValue');
-  const downloadCount = document.getElementById('downloadCount');
-  const cover = document.getElementById('bookCover');
-  const reviewEl = document.querySelector('#reviewSlider .review');
+    // Priority 2: SEO slug /book/asin/B0XXXX
+    const pathParts = window.location.pathname.split('/').filter(Boolean);
+    const asinIndex = pathParts.indexOf('asin');
+    if(asinIndex !== -1 && pathParts[asinIndex + 1]){
+      return pathParts[asinIndex + 1];
+    }
 
-  /* ================= COVER IMAGE ================= */
-  cover.loading = 'lazy';
-  cover.decoding = 'async';
-  cover.src = `https://images-na.ssl-images-amazon.com/images/P/${ASIN}.01.LZZZZZZZ.jpg`;
-  cover.onerror = () => cover.src = '/images/placeholder.jpg';
-
-  /* ================= PDF ================= */
-  const pdfUrl = `/filebookpdf.pdf`;
-
-  /* ================= TEXT / STATS ================= */
-  bookTitle.textContent = `PDF Download (${ASIN})`;
-  ratingValue.textContent = (Math.random() * 0.3 + 4.6).toFixed(1);
-  downloadCount.textContent =
-    (Math.floor(Math.random() * 1200) + 100).toLocaleString();
-
-  /* ================= REVIEWS ================= */
-  const names = ['Alex M.', 'Sarah K.', 'Daniel R.', 'Emily T.', 'Michael B.'];
-  const reviews = [
-    'Very helpful and easy to read.',
-    'Well explained and structured.',
-    'Great reference material.',
-    'Clear and informative content.',
-    'Worth downloading.'
-  ];
-
-  const rand = a => a[Math.floor(Math.random() * a.length)];
-  const daysAgo = () => Math.floor(Math.random() * 7) + 1;
-
-  function renderReview() {
-    reviewEl.innerHTML = `
-      <strong>${rand(names)}</strong>
-      <span style="font-size:11px;color:#6b7280;"> · ${daysAgo()} days ago</span><br>
-      “${rand(reviews)}”<br>
-      <span style="color:#f59e0b;">★★★★★</span>
-      <span style="font-size:11px;color:#16a34a;"> Verified Reader</span>
-    `;
+    return null;
   }
 
-  renderReview();
-  reviewEl.style.transition = 'transform .5s ease, opacity .5s ease';
+  function loadASIN(asin){
+    if(!asin) return;
 
-  setInterval(() => {
-    reviewEl.style.transform = 'translateY(-16px)';
-    reviewEl.style.opacity = '0';
-    setTimeout(() => {
-      renderReview();
-      reviewEl.style.transition = 'none';
-      reviewEl.style.transform = 'translateY(16px)';
-      reviewEl.style.opacity = '0';
-      void reviewEl.offsetWidth;
-      reviewEl.style.transition = 'transform .5s ease, opacity .5s ease';
-      reviewEl.style.transform = 'translateY(0)';
-      reviewEl.style.opacity = '1';
-    }, 500);
-  }, 3500);
+    const imageUrls = [
+      `https://m.media-amazon.com/images/I/${asin}.jpg`,
+      `https://m.media-amazon.com/images/I/${asin}.01._SX500_.jpg`,
+      `https://images-na.ssl-images-amazon.com/images/I/${asin}.jpg`
+    ];
 
-  /* ================= PDF READER ================= */
-  const pdfModal = document.createElement('div');
-  pdfModal.id = 'pdfReader';
-  pdfModal.innerHTML = `
-    <div class="pdf-wrapper">
-      <div class="pdf-ad">
-        <div class="ad-480x60">Ad 480x60</div>
-      </div>
-      <iframe src="${pdfUrl}"></iframe>
-      <button id="closePdf">✕</button>
-    </div>
-  `;
-  document.body.appendChild(pdfModal);
-
-  openPdf.addEventListener('click', () => {
-    pdfModal.classList.add('open');
-
-    if (window._Hasync) {
-      _Hasync.push(['Histats.track_event', 'open pdf reading', ASIN]);
+    const img = document.getElementById('coverImage');
+    let i = 0;
+    function tryLoad(){
+      if(i >= imageUrls.length) return;
+      img.src = imageUrls[i++];
     }
-  });
+    img.onerror = tryLoad;
+    tryLoad();
 
-  pdfModal.addEventListener('click', e => {
-    if (e.target.id === 'closePdf' || e.target === pdfModal) {
-      pdfModal.classList.remove('open');
-    }
-  });
+    document.getElementById('asinText').textContent = asin;
+    document.getElementById('bookTitle').textContent = `Amazon Book (${asin})`;
+  }
 
-  /* ================= TOP BOOK DOWNLOADS (UNDER CONTENT) ================= */
-
-const topBox = document.createElement('div');
-topBox.id = 'topBooks';
-topBox.innerHTML = `
-  <h3>Top Book Downloads</h3>
-  <div class="top-books-list"></div>
-`;
-
-/* 🔽 INSERT UNDER CONTENT */
-const mainContent = document.querySelector('main') 
-  || document.querySelector('#content') 
-  || document.body;
-
-mainContent.parentNode.insertBefore(topBox, mainContent.nextSibling);
-
-const topList = topBox.querySelector('.top-books-list');
-
-const topAsins = [
-  '1335534644',
-  'B0CH3ZN83Y',
-  '1401971369',
-  '1335534636',
-  'B0DDJPH5R6',
-  '0349132615'
-];
-
-topAsins.forEach(a => {
-  topList.innerHTML += `
-    <a href="https://okgpt.pages.dev/${a}" class="top-book-item">
-      <img loading="lazy"
-           src="https://images-na.ssl-images-amazon.com/images/P/${a}.01._SX200_.jpg">
-      <span>Download</span>
-    </a>
-  `;
-});
-
-
-  /* ================= STYLES ================= */
-  const style = document.createElement('style');
-  style.textContent = `
-    #pdfReader{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;z-index:999;align-items:center;justify-content:center}
-    #pdfReader.open{display:flex}
-    .pdf-wrapper{width:92%;height:92%;background:#fff;border-radius:12px;overflow:hidden;position:relative;display:flex;flex-direction:column}
-    .pdf-ad{height:60px;display:flex;align-items:center;justify-content:center;background:#f3f4f6}
-    .ad-480x60{width:480px;height:60px;background:#d1d5db;display:flex;align-items:center;justify-content:center}
-    .pdf-wrapper iframe{flex:1;border:none}
-    #closePdf{position:absolute;top:10px;right:10px;width:32px;height:32px;border:none;border-radius:50%;background:#111;color:#fff;cursor:pointer}
-
-    #topBooks{margin-top:48px;padding:24px;border-top:1px solid #e5e7eb}
-    #topBooks h3{font-size:18px;margin-bottom:16px}
-    .top-books-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:14px}
-    .top-book-item{text-decoration:none;color:#111;text-align:center}
-    .top-book-item img{width:100%;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,.12)}
-    .top-book-item span{display:block;margin-top:6px;font-size:13px}
-  `;
-  document.head.appendChild(style);
-
-});
+  const asin = getASIN();
+  if(asin){
+    loadASIN(asin);
+  } else {
+    document.getElementById('bookTitle').textContent = 'No ASIN Provided';
+  }
 </script>
-<script>
-window._Hasync = window._Hasync || [];
-_Hasync.push(['Histats.start', '1,5003413,4,0,0,0,00010000']); // ← YOUR HISTATS ID
-_Hasync.push(['Histats.track_hits', '']);
 
-(function () {
-  var hs = document.createElement('script');
-  hs.async = true;
-  hs.src = '//s10.histats.com/js15_as.js';
-  document.body.appendChild(hs);
-})();
-</script>
 </body>
 </html>
