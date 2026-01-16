@@ -111,27 +111,24 @@
   }
 
   function loadASIN(asin){
-    if(!asin) return;
+  const imageUrls = [
+    `https://images-na.ssl-images-amazon.com/images/P/${asin}.01.LZZZZZZZ.jpg`
+  ];
 
-    const imageUrls = [
-      `https://m.media-amazon.com/images/I/${asin}.jpg`,
-      `https://m.media-amazon.com/images/I/${asin}.01._SX500_.jpg`,
-      `https://images-na.ssl-images-amazon.com/images/I/${asin}.jpg`
-    ];
+  const img = document.getElementById('coverImage');
+  let i = 0;
 
-    const img = document.getElementById('coverImage');
-    let i = 0;
-    function tryLoad(){
-      if(i >= imageUrls.length) return;
-      img.src = imageUrls[i++];
-    }
-    img.onerror = tryLoad;
-    tryLoad();
-
-    document.getElementById('asinText').textContent = asin;
-    document.getElementById('bookTitle').textContent = `Amazon Book (${asin})`;
+  function tryLoad(){
+    if(i >= imageUrls.length) return;
+    img.src = imageUrls[i++];
   }
 
+  img.onerror = tryLoad;
+  tryLoad();
+
+  document.getElementById('asinText').textContent = asin;
+  document.getElementById('bookTitle').textContent = `Amazon Book (${asin})`;
+}
   const asin = getASIN();
   if(asin){
     loadASIN(asin);
