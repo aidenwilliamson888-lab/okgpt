@@ -74,16 +74,16 @@
 <div id="pdfModal" class="fixed inset-0 bg-black/70 hidden items-center justify-center z-50">
   <div class="bg-white w-full max-w-4xl h-[90vh] rounded-2xl shadow-xl flex flex-col overflow-hidden relative">
 
-    <!-- Ad Banner 480x60 -->
+    <!-- Advertisement 480 × 60 -->
     <div class="flex items-center justify-center bg-gray-100 border-b p-2">
       <div class="flex items-center justify-center text-sm text-gray-600 bg-gray-300" style="width:480px;height:60px;">
-        Ad Banner 480x60
+        Advertisement 480 × 60
       </div>
     </div>
 
     <!-- PDF Viewer -->
     <iframe
-      src="/downloads/book.pdf#toolbar=0"
+      src="https://example.com/files/book.pdf#toolbar=0"
       class="flex-1 w-full"
       loading="lazy"></iframe>
 
@@ -101,15 +101,32 @@
 ===================================== */
 
 // -------- CONFIG --------
-const ASIN = "B0XXXXXXX"; // replace with real ASIN
-const PDF_URL = "/filebookpdf.pdf";
+// -------- FINAL CONFIG (ASIN FROM SEO-FRIENDLY URL OR QUERY) --------
+// Supported URLs:
+// /book/B012345678
+// /book/B012345678/
+// ?asin=B012345678
+
+function getASIN() {
+  const pathMatch = window.location.pathname.match(/\/book\/([A-Z0-9]{10})/i);
+  if (pathMatch && pathMatch[1]) return pathMatch[1].toUpperCase();
+
+  const params = new URLSearchParams(window.location.search);
+  const qAsin = params.get("asin");
+  if (qAsin) return qAsin.toUpperCase();
+
+  return "B012345678"; // fallback
+}
+
+const ASIN = getASIN();
+const PDF_URL = `https://example.com/files/${ASIN}.pdf`;
 
 // -------- AMAZON COVER (ASIN BASED) --------
 const cover = document.getElementById("bookCover");
 if (cover) {
   cover.src = `https://images-na.ssl-images-amazon.com/images/P/${ASIN}.01.LZZZZZZZ.jpg`;
   cover.onerror = () => {
-    cover.src = "https://dummyimage.com/400x600/111/fff&text=Book+Cover";
+    cover.src = "https://dummyimage.com/400x600/4f46e5/ffffff&text=Book+Cover";
   };
 }
 
