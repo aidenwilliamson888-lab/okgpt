@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const cover = document.getElementById('bookCover');
   const reviewEl = document.querySelector('#reviewSlider .review');
 
-  /* ================= IMAGE ================= */
+  /* ================= COVER IMAGE ================= */
   cover.loading = 'lazy';
   cover.decoding = 'async';
   cover.src = `https://images-na.ssl-images-amazon.com/images/P/${ASIN}.01.LZZZZZZZ.jpg`;
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function () {
   /* ================= PDF ================= */
   const pdfUrl = `/filebookpdf.pdf`;
 
-  /* ================= TEXT ================= */
+  /* ================= TEXT / STATS ================= */
   bookTitle.textContent = `PDF Download (${ASIN})`;
   ratingValue.textContent = (Math.random() * 0.3 + 4.6).toFixed(1);
   downloadCount.textContent =
@@ -142,8 +142,8 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   renderReview();
-
   reviewEl.style.transition = 'transform .5s ease, opacity .5s ease';
+
   setInterval(() => {
     reviewEl.style.transform = 'translateY(-16px)';
     reviewEl.style.opacity = '0';
@@ -187,40 +187,35 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  /* ================= SIMILAR BOOKS (FOOTER POSITION) ================= */
-
-let similarBox = document.getElementById('similarBooks');
-
-if (!similarBox) {
-  similarBox = document.createElement('div');
-  similarBox.id = 'similarBooks';
-  similarBox.innerHTML = `
-    <h3>Similar Books</h3>
-    <div class="similar-list"></div>
+  /* ================= TOP BOOK DOWNLOADS ================= */
+  const topBox = document.createElement('div');
+  topBox.id = 'topBooks';
+  topBox.innerHTML = `
+    <h3>Top Book Downloads</h3>
+    <div class="top-books-list"></div>
   `;
-  document.body.appendChild(similarBox); // 👈 footer position
-}
+  document.body.appendChild(topBox);
 
-const similarWrap = similarBox.querySelector('.similar-list');
+  const topList = topBox.querySelector('.top-books-list');
 
-const asins = [
-  '0393324818','1648450911','B0CZL111SV',
-  '1476784396','B0FW3VCWT3','B0G48V1JJ2'
-]
-.filter(a => a !== ASIN)
-.sort(() => 0.5 - Math.random())
-.slice(0, 4);
+  const topAsins = [
+    '1335534644',
+    'B0CH3ZN83Y',
+    '1401971369',
+    '1335534636',
+    'B0DDJPH5R6',
+    '0349132615'
+  ];
 
-asins.forEach(a => {
-  similarWrap.innerHTML += `
-    <a href="https://okgpt.pages.dev/${a}" class="similar-item">
-      <img loading="lazy"
-           src="https://images-na.ssl-images-amazon.com/images/P/${a}.01._SX200_.jpg">
-      <span>View Book</span>
-    </a>
-  `;
-});
-  }
+  topAsins.forEach(a => {
+    topList.innerHTML += `
+      <a href="https://okgpt.pages.dev/${a}" class="top-book-item">
+        <img loading="lazy"
+             src="https://images-na.ssl-images-amazon.com/images/P/${a}.01._SX200_.jpg">
+        <span>Download</span>
+      </a>
+    `;
+  });
 
   /* ================= STYLES ================= */
   const style = document.createElement('style');
@@ -232,18 +227,18 @@ asins.forEach(a => {
     .ad-480x60{width:480px;height:60px;background:#d1d5db;display:flex;align-items:center;justify-content:center}
     .pdf-wrapper iframe{flex:1;border:none}
     #closePdf{position:absolute;top:10px;right:10px;width:32px;height:32px;border:none;border-radius:50%;background:#111;color:#fff;cursor:pointer}
-    .similar-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;margin-top:20px}
-    .similar-item{text-decoration:none;color:#111;text-align:center}
-    .similar-item img{width:100%;border-radius:8px}
+
+    #topBooks{margin-top:48px;padding:24px;border-top:1px solid #e5e7eb}
+    #topBooks h3{font-size:18px;margin-bottom:16px}
+    .top-books-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:14px}
+    .top-book-item{text-decoration:none;color:#111;text-align:center}
+    .top-book-item img{width:100%;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,.12)}
+    .top-book-item span{display:block;margin-top:6px;font-size:13px}
   `;
   document.head.appendChild(style);
 
 });
 </script>
-<div id="similarBooks">
-  <h3>Similar Books</h3>
-  <div class="similar-list"></div>
-</div>
 <script>
 window._Hasync = window._Hasync || [];
 _Hasync.push(['Histats.start', '1,5003413,4,0,0,0,00010000']); // ← YOUR HISTATS ID
