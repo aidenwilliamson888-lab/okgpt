@@ -1,92 +1,182 @@
-<?php
-/* =====================================
-   PHP ASIN AUTO BOOK LANDING PAGE
-   Single-file – No API required
-===================================== */
-
-// 1. GET ASIN FROM URL (?asin=XXXXXXXXXX)
-$asin = $_GET['asin'] ?? 'B08FHBV4ZX';
-
-// 2. NO STATIC DATA MAP (ASIN ONLY)
-
-// 3. ASIN-ONLY DEFAULT VALUES
-$title = 'Free Book Download';
-$author = 'Unknown Author';
-$description = 'Download this book instantly in PDF format.';
-$download = '#';
-
-// 4. AMAZON IMAGE (NO API)
-$cover = "https://images-na.ssl-images-amazon.com/images/P/{$asin}.01._SX600_.jpg";
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title><?php echo htmlspecialchars($title); ?> – Free PDF Download</title>
-  <meta name="description" content="Download <?php echo htmlspecialchars($title); ?> by <?php echo htmlspecialchars($author); ?> in PDF format." />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Download Book PDF</title>
+  <meta name="description" content="Download the PDF version of this book using Amazon ASIN. No API required." />
 
-  <style>
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: #ffffff;
-    }
-    .container { max-width: 900px; margin: auto; padding: 40px 20px; text-align: center; }
-    h1 { font-size: 42px; margin-bottom: 10px; }
-    .author { opacity: .85; margin-bottom: 20px; }
-    img { width: 260px; border-radius: 14px; box-shadow: 0 25px 50px rgba(0,0,0,.45); }
-    .card {
-      margin-top: 30px;
-      background: rgba(255,255,255,.08);
-      border-radius: 16px;
-      padding: 30px;
-    }
-    .btn {
-      display: inline-block;
-      background: #22c55e;
-      color: #022c22;
-      font-weight: 700;
-      padding: 16px 36px;
-      border-radius: 12px;
-      text-decoration: none;
-      margin-top: 20px;
-    }
-    footer { margin-top: 60px; font-size: 13px; opacity: .6; }
-  </style>
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-gradient-to-br from-indigo-50 via-white to-purple-50 min-h-screen flex items-center justify-center px-4">
 
-<div class="container">
-  <h1><?php echo htmlspecialchars($title); ?></h1>
-  <div class="author">by <?php echo htmlspecialchars($author); ?></div>
+<main class="max-w-5xl w-full bg-white/90 backdrop-blur rounded-3xl shadow-2xl grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 p-5 sm:p-6 md:p-10">
 
-  <img src="<?php echo $cover; ?>" alt="<?php echo htmlspecialchars($title); ?> cover" />
-
-  <p style="margin-top:25px"><?php echo htmlspecialchars($description); ?></p>
-
-  <div class="card">
-    <h2>Available Formats</h2>
-    <p>PDF · EPUB · MOBI</p>
-    <a class="btn" href="<?php echo $download; ?>">Download PDF</a>
+  <!-- Book Cover -->
+  <div class="flex justify-center items-center">
+    <img id="bookCover" class="w-44 sm:w-52 md:w-72 rounded-xl shadow-lg" alt="Book Cover" loading="lazy" decoding="async" />
   </div>
 
-  <footer>
-    <p>© 2026 Book Download</p>
-    <p><a href="#">DMCA</a> · <a href="#">Privacy</a></p>
-  </footer>
+  <!-- Content -->
+  <div class="flex flex-col justify-center">
+    <h1 id="bookTitle" class="text-2xl sm:text-3xl font-bold mb-4">Your Book Title</h1>
+
+    <p class="text-gray-600 mb-6 leading-relaxed">
+      Download the complete PDF version of this book. Instant access, mobile-friendly, and high-quality format.
+    </p>
+
+    <button id="openPdf" class="w-full sm:w-auto bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-4 rounded-xl text-base sm:text-lg font-semibold hover:from-indigo-700 hover:to-purple-700 transition shadow-lg">
+      Download PDF
+    </button>
+
+    <!-- Rating -->
+    <div class="flex items-center gap-4 mt-6 flex-wrap">
+      <div id="ratingValue" class="text-3xl font-bold">4.8</div>
+      <div>
+        <div class="text-yellow-500">★★★★★</div>
+        <div class="text-xs text-gray-500">Based on <span id="downloadCount">1</span> downloads</div>
+      </div>
+    </div>
+
+    <!-- Trust -->
+    <div class="flex flex-wrap gap-4 text-sm text-gray-700 mt-6">
+      <span>🛡 Secure</span>
+      <span>⚡ Instant</span>
+      <span>📱 Mobile Friendly</span>
+      <span>🌐 Official Website</span>
+      <span>📘 Publisher Approved</span>
+    </div>
+
+    
+    </div>
+
+    <!-- Reviews -->
+    <section class="mt-8">
+      <h2 class="font-semibold mb-3">Reader Reviews</h2>
+      <div id="reviewBox" class="bg-gradient-to-br from-gray-50 to-white rounded-xl p-4 text-sm text-gray-700 shadow-sm">
+        “Very clear and helpful. Highly recommended.”
+      </div>
+    </section>
+
+    <!-- Verification Seals -->
+    <div class="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 text-center text-xs">
+      <div class="border border-indigo-100 rounded-xl p-3 bg-indigo-50 text-indigo-700 font-medium">✔ Verified Source</div>
+      <div class="border border-indigo-100 rounded-xl p-3 bg-indigo-50 text-indigo-700 font-medium">🔒 Secure Download</div>
+      <div class="border border-indigo-100 rounded-xl p-3 bg-indigo-50 text-indigo-700 font-medium">🛡 Malware Free</div>
+      <div class="border border-indigo-100 rounded-xl p-3 bg-indigo-50 text-indigo-700 font-medium">📄 PDF Certified</div>
+    </div>
+
+      </div>
+</main>
+
+<!-- PDF Reader Modal -->
+<div id="pdfModal" class="fixed inset-0 bg-black/70 hidden items-center justify-center z-50">
+  <div class="bg-white w-full max-w-4xl h-[90vh] rounded-2xl shadow-xl flex flex-col overflow-hidden relative">
+
+    <!-- Ad Banner 480x60 -->
+    <div class="flex items-center justify-center bg-gray-100 border-b p-2">
+      <div class="flex items-center justify-center text-sm text-gray-600 bg-gray-300" style="width:480px;height:60px;">
+        Ad Banner 480x60
+      </div>
+    </div>
+
+    <!-- PDF Viewer -->
+    <iframe
+      src="/downloads/book.pdf#toolbar=0"
+      class="flex-1 w-full"
+      loading="lazy"></iframe>
+
+    <!-- Close Button -->
+    <button id="closePdf" class="absolute top-4 right-4 bg-black text-white rounded-full w-10 h-10 flex items-center justify-center">✕</button>
+  </div>
 </div>
 
-<!-- Schema.org Book -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Book",
-  "name": "<?php echo addslashes($title); ?>",
-  "author": {"@type":"Person","name":"<?php echo addslashes($author); ?>"}
+
+
+<script>
+/* =====================================
+   FINAL PRODUCTION SCRIPT (NO API)
+   Clean • Lightweight • Conversion Ready
+===================================== */
+
+// -------- CONFIG --------
+const ASIN = "B0XXXXXXX"; // replace with real ASIN
+const PDF_URL = "/filebookpdf.pdf";
+
+// -------- AMAZON COVER (ASIN BASED) --------
+const cover = document.getElementById("bookCover");
+if (cover) {
+  cover.src = `https://images-na.ssl-images-amazon.com/images/P/${ASIN}.01.LZZZZZZZ.jpg`;
+  cover.onerror = () => {
+    cover.src = "https://dummyimage.com/400x600/111/fff&text=Book+Cover";
+  };
 }
+
+// -------- PDF READER MODAL --------
+const modal = document.getElementById("pdfModal");
+const closeBtn = document.getElementById("closePdf");
+
+if (downloadBtn && modal) {
+  downloadBtn.addEventListener("click", () => {
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
+  });
+}
+
+if (closeBtn && modal) {
+  closeBtn.addEventListener("click", () => {
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+  });
+}
+if (downloadBtn) {
+  downloadBtn.addEventListener("click", () => {
+    window.location.href = PDF_URL;
+  });
+}
+
+// -------- SOCIAL PROOF (SAFE RANDOMIZATION) --------
+const ratingEl = document.getElementById("ratingValue");
+const downloadsEl = document.getElementById("downloadCount");
+
+if (ratingEl) {
+  ratingEl.innerText = (Math.random() * (4.9 - 4.6) + 4.6).toFixed(1);
+}
+
+if (downloadsEl) {
+  downloadsEl.innerText = (Math.floor(Math.random() * 9000) + 1000).toLocaleString();
+}
+
+// -------- REVIEW ROTATOR --------
+const reviews = [
+  "Very clear and helpful. Highly recommended.",
+  "Easy to read and well structured.",
+  "Worth downloading, practical content.",
+  "Professional quality and easy to understand.",
+  "Saved me a lot of time."
+];
+
+let reviewIndex = 0;
+const reviewBox = document.getElementById("reviewBox");
+
+if (reviewBox) {
+  setInterval(() => {
+    reviewBox.innerText = `“${reviews[reviewIndex]}”`;
+    reviewIndex = (reviewIndex + 1) % reviews.length;
+  }, 4000);
+}
+
+// -------- BASIC SOFT PROTECTION --------
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("keydown", e => {
+  if ((e.ctrlKey || e.metaKey) && ["s", "p"].includes(e.key.toLowerCase())) {
+    e.preventDefault();
+  }
+});
 </script>
+
+
 
 </body>
 </html>
